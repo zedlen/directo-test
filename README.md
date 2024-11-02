@@ -126,9 +126,10 @@ La respuesta debería seguir el formato:
 Para el calculo de factoriales, al estar usando el tipo entero, en caso de numeros cuyo factorial sea mayor a 170, podria retornar `null` ya que el resultado revasara el maximo que puede almacenar este tipo de dato. Para el caso de fibonacci el numero mayor que incurre en esta limitante sera 1476.
 
 ### TODO
-[] Agregar pruebas
-[] Hacer las consultas asincronas (maybe, usando un sync_id o calculation_id en primer consulta y con ese id obtener el resultado)
-[] Revisar opciones para poder calcular factoriales y serie de fibonacci para numero mayores 
+- [ ] Agregar pruebas.
+- [ ] Hacer las consultas asincronas (maybe, usando un sync_id o calculation_id en primer consulta y con ese id obtener el resultado).
+- [ ] Revisar opciones para poder calcular factoriales y serie de fibonacci para numero mayores.
+
 
 ---
 
