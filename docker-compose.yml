@@ -1,22 +1,5 @@
 version: '3'
 services:
-  gateway:
-    build: ./apps/gateway
-    ports:
-      - "3000:3000"
-    depends_on:
-      - calculator
-      - rabbitmq
-    environment:
-      RABBITMQ_URL: amqp://rabbitmq
-
-  calculator:
-    build: ./apps/calculator
-    environment:
-      RABBITMQ_URL: amqp://rabbitmq
-    depends_on:
-      - rabbitmq
-
   rabbitmq:
     image: rabbitmq:3
     ports:

@@ -1,4 +1,4 @@
-import { FibonacciCalculator } from 'src/interfaces/fibonacci-calculator.interface';
+import { FibonacciCalculator } from '@calculator/infrastructure/interfaces/fibonacci-calculator.interface';
 
 export class FibonacciCalculatorUseCase implements FibonacciCalculator {
   calculate(n: number): number {

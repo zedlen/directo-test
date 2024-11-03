@@ -1,0 +1,32 @@
+version: '3'
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+    env_file:
+      - .env.local
+    ports:
+      - "3000:3000"
+    depends_on:
+      - calculator
+      - rabbitmq
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq
+
+  calculator:
+    build:
+      context: .
+      dockerfile: apps/calculator/Dockerfile
+    env_file:
+      - .env.local
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - "5672:5672"
+      - "15672:15672"

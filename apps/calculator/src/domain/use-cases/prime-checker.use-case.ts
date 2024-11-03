@@ -1,4 +1,4 @@
-import { PrimeChecker } from 'src/interfaces/prime-checker.interface';
+import { PrimeChecker } from '@calculator/infrastructure/interfaces/prime-checker.interface';
 
 export class PrimeCheckerUseCase implements PrimeChecker {
   isPrime(n: number): boolean {

@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ParityChecker } from 'src/interfaces/parity-checker.interface';
-import { PrimeChecker } from 'src/interfaces/prime-checker.interface';
-import { FactorialCalculator } from 'src/interfaces/factorial-calculator.interface';
-import { SumCalculator } from 'src/interfaces/sum-calculator.interface';
-import { FactorCalculator } from 'src/interfaces/factor-calculator.interface';
-import { FibonacciCalculator } from 'src/interfaces/fibonacci-calculator.interface';
+import {
+  ParityChecker,
+  PrimeChecker,
+  FactorialCalculator,
+  SumCalculator,
+  FactorCalculator,
+  FibonacciCalculator,
+} from '@calculator/infrastructure/interfaces';
 
 @Injectable()
 export class CalculatorService {
@@ -20,7 +22,7 @@ export class CalculatorService {
     private readonly fibonacciCalculator: FibonacciCalculator,
   ) {}
 
-  calculate(n: number) {
+  async calculate(n: number) {
     return {
       isPair: this.parityChecker.isPair(n),
       isPrime: this.primeChecker.isPrime(n),

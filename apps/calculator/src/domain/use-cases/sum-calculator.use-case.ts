@@ -1,4 +1,4 @@
-import { SumCalculator } from 'src/interfaces/sum-calculator.interface';
+import { SumCalculator } from '@calculator/infrastructure/interfaces/sum-calculator.interface';
 
 export class SumCalculatorUseCase implements SumCalculator {
   calculate(n: number): number {

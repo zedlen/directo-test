@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { GatewayController } from './controllers/gateway.controller';
-import { ValidateInputMiddleware } from './middleware/validate-input.middleware';
-import { LoggerMiddleware } from './middleware/logger.middleware';
+import { GatewayController } from '@gateway/infrastructure/controllers/gateway.controller';
+import { ValidateInputMiddleware } from '@gateway/application/middlewares/validate-input.middleware';
+import { LoggerMiddleware } from '@gateway/application/middlewares/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({

@@ -1,4 +1,4 @@
-import { FactorialCalculator } from 'src/interfaces/factorial-calculator.interface';
+import { FactorialCalculator } from '@calculator/infrastructure/interfaces/factorial-calculator.interface';
 
 export class FactorialCalculatorUseCase implements FactorialCalculator {
   calculate(n: number): number {

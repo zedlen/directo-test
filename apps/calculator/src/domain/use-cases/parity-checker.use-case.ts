@@ -1,4 +1,4 @@
-import { ParityChecker } from 'src/interfaces/parity-checker.interface';
+import { ParityChecker } from '@calculator/infrastructure/interfaces/parity-checker.interface';
 
 export class ParityCheckerUseCase implements ParityChecker {
   isPair(n: number): boolean {

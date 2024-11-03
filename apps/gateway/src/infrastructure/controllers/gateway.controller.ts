@@ -26,9 +26,6 @@ export class GatewayController {
   @Get('calculate/:n')
   async calculate(@Param('n') n: string) {
     const number = parseInt(n, 10);
-    const response = await this.client
-      .send({ cmd: 'calculate' }, number)
-      .toPromise();
-    return response;
+    return await this.client.send({ cmd: 'calculate' }, number);
   }
 }

@@ -7,25 +7,28 @@ Este proyecto implementa una aplicación de microservicios en NestJS para realiz
 ## Decisiones de Arquitectura
 
 ### 1. **Arquitectura Hexagonal y Modular**
-   - La aplicación está dividida en dos servicios principales: `Gateway` y `Calculator`.
-   - **Gateway** se encarga de recibir las solicitudes HTTP, validar el input y publicar mensajes a través de RabbitMQ.
-   - **Calculator** realiza los cálculos específicos (paridad, primalidad, factorial, suma, factores y Fibonacci).
-   - Ambos servicios están diseñados como módulos independientes en el monorepo, lo que facilita la mantenibilidad y escalabilidad.
+
+- La aplicación está dividida en dos servicios principales: `Gateway` y `Calculator`.
+- **Gateway** se encarga de recibir las solicitudes HTTP, validar el input y publicar mensajes a través de RabbitMQ.
+- **Calculator** realiza los cálculos específicos (paridad, primalidad, factorial, suma, factores y Fibonacci).
+- Ambos servicios están diseñados como módulos independientes en el monorepo, lo que facilita la mantenibilidad y escalabilidad.
 
 ### 2. **Microservicios y RabbitMQ**
-   - RabbitMQ se utiliza para manejar la comunicación entre los servicios de forma asincrónica, lo que permite distribuir las responsabilidades entre servicios independientes.
-   - Cada tipo de cálculo está configurado como un port en el módulo `Calculator`, siguiendo el patrón de diseño de puertos y adaptadores.
-   - Aunque el diseño está preparado para asincronía, en este caso el `Gateway` escucha la respuesta de `Calculator` de manera inmediata para devolver una respuesta completa al cliente.
+
+- RabbitMQ se utiliza para manejar la comunicación entre los servicios de forma asincrónica, lo que permite distribuir las responsabilidades entre servicios independientes.
+- Cada tipo de cálculo está configurado como un port en el módulo `Calculator`, siguiendo el patrón de diseño de puertos y adaptadores.
+- Aunque el diseño está preparado para asincronía, en este caso el `Gateway` escucha la respuesta de `Calculator` de manera inmediata para devolver una respuesta completa al cliente.
 
 ### 3. **Principios SOLID y Clean Architecture**
-   - **Single Responsibility Principle (SRP)**: Los servicios `Gateway` y `Calculator` están claramente separados, cada uno con responsabilidades distintas (manejo de solicitudes y cálculos, respectivamente).
-   - **Dependency Inversion Principle (DIP)**: Los casos de uso se inyectan en el `CalculatorService` mediante interfaces o "ports", lo que permite sustituir implementaciones sin cambiar el código principal.
-   - **Casos de uso**: Cada operación matemática se define en un caso de uso independiente. Esto permite un desarrollo modular y testable, y garantiza una alta cohesión dentro de cada caso de uso.
-   
-### 4. **Inyección de Dependencias y Configuración Global**
-   - Se utiliza `@nestjs/config` para manejar variables de entorno en distintos entornos (desarrollo, producción, test).
-   - La configuración global se define en archivos `.env` y `tsconfig.global.json` para centralizar opciones comunes de TypeScript.
 
+- **Single Responsibility Principle (SRP)**: Los servicios `Gateway` y `Calculator` están claramente separados, cada uno con responsabilidades distintas (manejo de solicitudes y cálculos, respectivamente).
+- **Dependency Inversion Principle (DIP)**: Los casos de uso se inyectan en el `CalculatorService` mediante interfaces o "ports", lo que permite sustituir implementaciones sin cambiar el código principal.
+- **Casos de uso**: Cada operación matemática se define en un caso de uso independiente. Esto permite un desarrollo modular y testable, y garantiza una alta cohesión dentro de cada caso de uso.
+
+### 4. **Inyección de Dependencias y Configuración Global**
+
+- Se utiliza `@nestjs/config` para manejar variables de entorno en distintos entornos (desarrollo, producción, test).
+- La configuración global se define en archivos `.env` y `tsconfig.global.json` para centralizar opciones comunes de TypeScript.
 
 ---
 
@@ -47,7 +50,7 @@ Este proyecto implementa una aplicación de microservicios en NestJS para realiz
 
 2. **Configurar Variables de Entorno**
 
-   - Crea archivos `.env.development` y `.env.production` en la raíz del proyecto si no existen.
+   - Crea archivos `.env.development`, `.env.production` y `.env.local` en la raíz del proyecto si no existen (Puedes apoyarte de los archivos de ejemplo que encontraras con la extecion `.example` para cada ambiente).
    - Configura las variables necesarias (por ejemplo, `RABBITMQ_URL`).
 
 3. **Levantar RabbitMQ con Docker Compose**
@@ -65,7 +68,7 @@ Este proyecto implementa una aplicación de microservicios en NestJS para realiz
    Usando Docker Compose, puedes levantar toda la aplicación en contenedores:
 
    ```bash
-   docker-compose -f docker-compose.yml up --build
+   docker-compose -f docker-compose.all-services.yml up --build
    ```
 
    Esto construirá las imágenes Docker para `gateway` y `calculator`, y las ejecutará junto con RabbitMQ.
@@ -80,23 +83,21 @@ Este proyecto implementa una aplicación de microservicios en NestJS para realiz
      npm install
      ```
 
-   - **Iniciar el Servicio Calculator**
+   - **Construir los servicios**
 
      ```bash
-     cd apps/calculator
-     npm run start:dev
+     npm run build:all
      ```
 
-   - **Iniciar el Servicio Gateway**
+   - **Iniciar todos los servicios**
 
      En otra terminal:
 
      ```bash
-     cd apps/gateway
-     npm run start:dev
+     npm run start:all
      ```
 
-6. **Pruebas**
+6. **Pruebas(WIP)**
 
    Ejecuta las pruebas unitarias para ambos servicios con el siguiente comando:
 
@@ -126,10 +127,10 @@ La respuesta debería seguir el formato:
 Para el calculo de factoriales, al estar usando el tipo entero, en caso de numeros cuyo factorial sea mayor a 170, podria retornar `null` ya que el resultado revasara el maximo que puede almacenar este tipo de dato. Para el caso de fibonacci el numero mayor que incurre en esta limitante sera 1476.
 
 ### TODO
-- [ ] Agregar pruebas.
-- [ ] Hacer las consultas asincronas (maybe, usando un sync_id o calculation_id en primer consulta y con ese id obtener el resultado).
-- [ ] Revisar opciones para poder calcular factoriales y serie de fibonacci para numero mayores.
 
+- [ ] Agregar pruebas.
+- [ ] Revisar opciones para poder calcular factoriales y serie de fibonacci para numero mayores.
+- [ ] Implement Hot-reload when making changes
 
 ---
 

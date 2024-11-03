@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { CalculatorModule } from './calculator.module';
+import { CalculatorModule } from '@calculator/calculator.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 
